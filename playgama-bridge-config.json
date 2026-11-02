@@ -1,0 +1,15 @@
+{
+  "debug": false,
+  "loadingScreenType": "none",
+  "sendAnalyticsEvents": false,
+  "advertisement": {
+    "minimumDelayBetweenInterstitial": 60,
+    "interstitial": {
+      "autoShow": []
+    }
+  },
+  "platforms": {
+    "vk": {},
+    "ok": {}
+  }
+}
