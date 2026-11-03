@@ -17,6 +17,21 @@
   var activeAd = null;
   var nextRequestId = 1;
   var adRequests = Object.create(null);
+  var bannerWanted = false;
+
+  function syncBanner() {
+    if (!sdk || !sdk.advertisement.isBannerSupported ||
+        (sdk.platform.id !== "vk" && sdk.platform.id !== "ok")) return;
+    var wanted = readySent && !isPaused();
+    if (wanted === bannerWanted) return;
+    bannerWanted = wanted;
+    try {
+      if (wanted) sdk.advertisement.showBanner("bottom");
+      else sdk.advertisement.hideBanner();
+    } catch (error) {
+      console.warn("Playgama banner failed.", error);
+    }
+  }
 
   function launchPlatform() {
     var params = new URLSearchParams(global.location.search);
@@ -98,6 +113,7 @@
       ignoreAudioRejection(audio.resume());
     }
     syncGameplay();
+    syncBanner();
   }
 
   function loadingReady() {
@@ -105,6 +121,7 @@
     if (!sdk || readySent) return false;
     readySent = true;
     sendMessage("game_ready");
+    syncBanner();
     return true;
   }
 

@@ -80,7 +80,9 @@ var CUSTOM_PARAMETERS = {
         var app_container = document.getElementById('app-container');
         var game_canvas = document.getElementById('canvas');
         var innerWidth = window.innerWidth;
-        var innerHeight = window.innerHeight - buttonHeight;
+        // Use the viewport supplied by the host. Native external banners may
+        // already resize it; subtracting a banner height here would do it twice.
+        var innerHeight = Math.max(1, window.innerHeight - buttonHeight);
         if (prevInnerWidth == innerWidth && prevInnerHeight == innerHeight)
         {
             return;
